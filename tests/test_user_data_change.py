@@ -30,6 +30,8 @@ class TestUserDataChange:
         response_t = user_api.get_token(payload, TokenNames.login_success_token)
         payload[inpt_p] = fake.password()
         response = user_api.user_data_change_rqst(payload, response_t)
+        response_t = user_api.get_token(payload, TokenNames.login_success_token)
+        user_api.user_data_delete_rqst(response_t)
         assert response.status_code == 200 and response.json()['success'] == True
 
 

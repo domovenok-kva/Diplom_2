@@ -25,6 +25,12 @@ class UserAPI:
         headers = {'authorization' : token}
         return requests.patch(UrlsForTest.user_data_url, json = payload, headers = headers)
     
+    @allure.step("Удаление пользователя")
+    def user_data_delete_rqst(self, token):
+        headers = {'authorization' : token}
+        return requests.delete(UrlsForTest.user_del, headers = headers)
+    
+    @allure.step("Получение токена")
     def get_token(self, payload, token):
         user_api = UserAPI()
         response = user_api.create_user_rqst(payload)

@@ -12,6 +12,7 @@ class TestOrderCreation:
         response_t = user_api.get_token(payload, TokenNames.login_success_token)
         ingridients = order_api.ingridients()
         response = order_api.create_order_rqst(ingridients, response_t)
+        user_api.user_data_delete_rqst(response_t)
         assert response.status_code == 200 and response.json()['success'] == True
 
     @allure.step("без авторизации")
@@ -27,6 +28,7 @@ class TestOrderCreation:
         response_t = user_api.get_token(payload, TokenNames.login_success_token)
         ingridients = ''
         response = order_api.create_order_rqst(ingridients, response_t)
+        user_api.user_data_delete_rqst(response_t)
         assert response.status_code == 400 
         assert response.json()['message'] == ErrorNames.no_ingridients_err
 
@@ -37,6 +39,7 @@ class TestOrderCreation:
         response_t = user_api.get_token(payload, TokenNames.login_success_token)
         invalid_ing = fake.ipv6()
         response = order_api.create_order_rqst(invalid_ing, response_t)
+        user_api.user_data_delete_rqst(response_t)
         assert response.status_code == 500
   
 

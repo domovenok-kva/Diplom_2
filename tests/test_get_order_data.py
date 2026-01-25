@@ -12,6 +12,7 @@ class TestGetOrderData:
         ingridients = order_api.ingridients()
         response = order_api.create_order_rqst(ingridients, response_t)
         response = order_api.users_orders_get_rqst(response_t)
+        user_api.user_data_delete_rqst(response_t)
         assert response.json()['success'] == True   
 
     @allure.step("неавторизованный пользователь")
