@@ -21,7 +21,9 @@ class TestUserLogin:
     def test_login_whith_not_correct_data(self, user_api, inpt):
         payload = user_api.create_new_user_data()
         response = user_api.create_user_rqst(payload)
+        response_t = user_api.get_token(payload, TokenNames.login_success_token)
         payload[inpt] = 'invalid_data'
-        response = user_api.login_exist_user_rqst(payload)       
+        response = user_api.login_exist_user_rqst(payload)
+        user_api.user_data_delete_rqst(response_t)       
         assert response.status_code == 401
         assert response.json()['message'] == ErrorNames.incorrect_email_or_password_err
